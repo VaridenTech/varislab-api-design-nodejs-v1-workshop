@@ -1,17 +1,6 @@
 import { Router } from 'express'
-import { z } from 'zod'
+import { createHabitSchema, habitParamsSchema } from '../db/validation.ts'
 import { validateBody, validateParams } from '../middleware/validation.ts'
-
-const createHabitSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  description: z.string().optional(),
-  frequency: z.enum(['daily', 'weekly', 'monthly']),
-  targetCount: z.number().int().positive().optional(),
-})
-
-const habitParamsSchema = z.object({
-  id: z.uuid('Invalid habit ID'),
-})
 
 const router = Router()
 

@@ -16,6 +16,9 @@ const envSchema = z.object({
   APP_STAGE: z.enum(['dev', 'test', 'production']).default('dev'),
   PORT: z.coerce.number().int().positive().default(3000),
   DATABASE_URL: z.string().startsWith('postgresql://'),
+  JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters'),
+  JWT_EXPIRES_IN: z.string().default('7d'),
+  BCRYPT_ROUNDS: z.coerce.number().int().min(10).max(15).default(12),
 })
 
 export type Env = z.infer<typeof envSchema>

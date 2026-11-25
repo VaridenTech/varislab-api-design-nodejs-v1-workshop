@@ -1,3 +1,4 @@
+import { hashPassword } from '../utils/password.ts'
 import { prisma } from './connection.ts'
 
 const seed = async () => {
@@ -10,7 +11,7 @@ const seed = async () => {
     data: {
       email: 'demo@habittracker.com',
       username: 'demouser',
-      password: 'demo12345',
+      password: await hashPassword('demo12345'),
       firstName: 'Demo',
       lastName: 'User',
     },

@@ -31,6 +31,12 @@ export const updateHabitSchema = createHabitSchema.partial().extend({
   isActive: z.boolean().optional(),
 })
 
+export const completeHabitSchema = z
+  .object({
+    note: z.string().max(500).optional(),
+  })
+  .default({})
+
 export const habitParamsSchema = z.object({
   id: z.uuid('Invalid habit ID'),
 })
@@ -39,4 +45,5 @@ export type RegisterInput = z.infer<typeof registerSchema>
 export type LoginInput = z.infer<typeof loginSchema>
 export type CreateHabitInput = z.infer<typeof createHabitSchema>
 export type UpdateHabitInput = z.infer<typeof updateHabitSchema>
+export type CompleteHabitInput = z.infer<typeof completeHabitSchema>
 export type HabitParams = z.infer<typeof habitParamsSchema>

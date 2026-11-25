@@ -4,6 +4,7 @@ import helmet from 'helmet'
 import morgan from 'morgan'
 import { isTest } from '../env.ts'
 import { prisma } from './db/connection.ts'
+import { errorHandler, notFound } from './middleware/errorHandler.ts'
 import authRoutes from './routes/authRoutes.ts'
 import habitRoutes from './routes/habitRoutes.ts'
 import userRoutes from './routes/userRoutes.ts'
@@ -38,6 +39,9 @@ app.get('/health', async (req, res) => {
 app.use('/api/auth', authRoutes)
 app.use('/api/habits', habitRoutes)
 app.use('/api/users', userRoutes)
+
+app.use(notFound)
+app.use(errorHandler)
 
 export { app }
 

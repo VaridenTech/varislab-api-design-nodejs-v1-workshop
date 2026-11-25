@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  res.status(201).json({ message: 'created habit' })
+  res.status(201).json({ message: 'created habit', habit: req.body })
 })
 
 router.get('/:id', (req, res) => {

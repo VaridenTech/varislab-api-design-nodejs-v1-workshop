@@ -1,4 +1,9 @@
 import { Router } from 'express'
+import {
+  createHabit,
+  getHabitById,
+  getUserHabits,
+} from '../controllers/habitController.ts'
 import { createHabitSchema, habitParamsSchema } from '../db/validation.ts'
 import { authenticateToken } from '../middleware/auth.ts'
 import { validateBody, validateParams } from '../middleware/validation.ts'
@@ -7,17 +12,9 @@ const router = Router()
 
 router.use(authenticateToken)
 
-router.get('/', (req, res) => {
-  res.json({ message: 'habits' })
-})
-
-router.post('/', validateBody(createHabitSchema), (req, res) => {
-  res.status(201).json({ message: 'created habit', habit: req.body })
-})
-
-router.get('/:id', validateParams(habitParamsSchema), (req, res) => {
-  res.json({ message: `got habit ${req.params.id}` })
-})
+router.get('/', getUserHabits)
+router.post('/', validateBody(createHabitSchema), createHabit)
+router.get('/:id', validateParams(habitParamsSchema), getHabitById)
 
 router.patch('/:id', validateParams(habitParamsSchema), (req, res) => {
   res.json({ message: `updated habit ${req.params.id}` })

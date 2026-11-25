@@ -1,8 +1,11 @@
 import { Router } from 'express'
 import { createHabitSchema, habitParamsSchema } from '../db/validation.ts'
+import { authenticateToken } from '../middleware/auth.ts'
 import { validateBody, validateParams } from '../middleware/validation.ts'
 
 const router = Router()
+
+router.use(authenticateToken)
 
 router.get('/', (req, res) => {
   res.json({ message: 'habits' })

@@ -1,4 +1,4 @@
-import { SignJWT } from 'jose'
+import { jwtVerify, SignJWT } from 'jose'
 import { env } from '../../env.ts'
 
 export interface JwtPayload {
@@ -15,4 +15,16 @@ export const generateToken = (payload: JwtPayload): Promise<string> => {
     .setIssuedAt()
     .setExpirationTime(env.JWT_EXPIRES_IN)
     .sign(secretKey)
+}
+
+export const verifyToken = async (token: string): Promise<JwtPayload> => {
+  const { payload } = await jwtVerify<JwtPayload>(token, secretKey, {
+    algorithms: ['HS256'],
+  })
+
+  return {
+    id: payload.id,
+    email: payload.email,
+    username: payload.username,
+  }
 }
